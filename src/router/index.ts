@@ -1,20 +1,56 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
+import HomePage from '../views/HomePage.vue';
+import LoginPage from '../views/LoginPage.vue';
+import RegisterPage from '../views/RegisterPage.vue';
+import { useAuthStore } from '../stores/authStore';
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '',
-    redirect: '/folder/Inbox'
+    path: '/',
+    redirect: '/home'
   },
   {
-    path: '/folder/:id',
-    component: () => import ('../views/FolderPage.vue')
+    path: '/home',
+    name: 'Home',
+    component: HomePage
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: LoginPage
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: RegisterPage
+  },
+  {
+    path: '/media/create',
+    name: 'MediaCreate',
+    component: () => import('../views/MediaCreatePage.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/user',
+    name: 'UserPage',
+    component: () => import('../views/UserPage.vue'),
+    meta: { requiresAuth: true }
   }
-]
+];
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes
-})
+});
 
-export default router
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore();
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+    next('/login');
+  } else {
+    next();
+  }
+});
+
+export default router;
