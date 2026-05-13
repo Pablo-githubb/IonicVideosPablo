@@ -131,22 +131,6 @@ VITE_API_URL=http://localhost:8000/api
 
 ---
 
-## 🧪 Tests
-
-Executar tests unitaris:
-
-```bash
-npm run test:unit
-```
-
-Executar tests e2e:
-
-```bash
-npm run test:e2e
-```
-
----
-
 ## 🛠️ Scripts disponibles
 
 | Script | Descripció |

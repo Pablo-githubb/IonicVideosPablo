@@ -17,12 +17,7 @@ export default {
   },
 
   async createMedia(formData: FormData) {
-    // Required header for file uploads
-    const response = await api.post('/multimedia', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    });
+    const response = await api.post('/multimedia', formData);
     return response.data;
   },
 
