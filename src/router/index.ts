@@ -32,10 +32,20 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiresAuth: true }
   },
   {
+    path: '/media/edit/:id',
+    name: 'MediaEdit',
+    component: () => import('../views/MediaEditPage.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/user',
     name: 'UserPage',
     component: () => import('../views/UserPage.vue'),
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/home'
   }
 ];
 

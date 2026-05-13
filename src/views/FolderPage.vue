@@ -1,53 +1,93 @@
 <template>
   <ion-page>
-    <ion-header :translucent="true">
-      <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-menu-button color="primary"></ion-menu-button>
-        </ion-buttons>
-        <ion-title>{{ $route.params.id }}</ion-title>
-      </ion-toolbar>
-    </ion-header>
+    <AppNavbar />
+    <ion-content class="ion-padding">
+      <div class="container">
+        <h1 class="title">{{ folderName }}</h1>
+        <p class="subtitle">Browse multimedia by category</p>
 
-    <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">{{ $route.params.id }}</ion-title>
-        </ion-toolbar>
-      </ion-header>
+        <div v-if="loading" style="text-align: center; margin-top: 50px;">
+          <ion-spinner></ion-spinner>
+        </div>
 
-      <div id="container">
-        <strong class="capitalize">{{ $route.params.id }}</strong>
-        <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+        <div v-else class="media-grid">
+          <MediaCard v-for="item in mediaItems" :key="item.id" :media="item" />
+        </div>
+
+        <div v-if="mediaItems.length === 0 && !loading" class="empty-state">
+          <p>No content in this folder.</p>
+        </div>
       </div>
     </ion-content>
+    <AppFooter />
   </ion-page>
 </template>
 
 <script setup lang="ts">
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import { ref, onMounted, computed } from 'vue';
+import { useRoute } from 'vue-router';
+import { IonPage, IonContent, IonSpinner } from '@ionic/vue';
+import AppNavbar from '../components/AppNavbar.vue';
+import AppFooter from '../components/AppFooter.vue';
+import MediaCard from '../components/MediaCard.vue';
+
+const route = useRoute();
+const mediaItems = ref<any[]>([]);
+const loading = ref(true);
+
+const folderName = computed(() => {
+  const id = route.params.id as string;
+  return id.charAt(0).toUpperCase() + id.slice(1);
+});
+
+onMounted(() => {
+  // Placeholder - in future can filter by category
+  loading.value = false;
+});
 </script>
 
 <style scoped>
-#container {
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--ion-text-color);
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  color: var(--ion-text-color-secondary);
+}
+
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.empty-state {
   text-align: center;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  margin-top: 50px;
+  color: var(--ion-text-color-secondary);
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
+@media (max-width: 640px) {
+  .title {
+    font-size: 1.5rem;
+  }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-  color: #8c8c8c;
-  margin: 0;
+  .media-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
 }
 
 #container a {
