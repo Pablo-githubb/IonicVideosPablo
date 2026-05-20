@@ -100,28 +100,45 @@ const formatFileSize = (bytes: number): string => {
 };
 
 const submit = async () => {
-  if (!file.value) return;
-  loading.value = true;
-  error.value = '';
-  success.value = '';
+   if (!file.value) return;
+   loading.value = true;
+   error.value = '';
+   success.value = '';
 
-  try {
-    const formData = new FormData();
-    formData.append('title', title.value);
-    formData.append('description', description.value);
-    formData.append('file', file.value);
+   try {
+     const formData = new FormData();
+     formData.append('title', title.value);
+     formData.append('description', description.value);
+     formData.append('file', file.value);
 
-    await multimediaService.createMedia(formData);
-    success.value = 'Media uploaded successfully! Redirecting...';
-    setTimeout(() => {
-      router.push('/user');
-    }, 1500);
-  } catch (err: any) {
-    error.value = err.response?.data?.message || err.message || 'Error uploading file';
-  } finally {
-    loading.value = false;
-  }
-};
+     await multimediaService.createMedia(formData);
+     success.value = 'Media uploaded successfully! Redirecting...';
+     setTimeout(() => {
+       router.push('/user');
+     }, 1500);
+   } catch (err: any) {
+     // Enhanced error handling
+     if (err.response?.status === 422) {
+       // Validation error
+       const errors = err.response.data.errors;
+       const errorMessages = Object.values(errors)
+         .flat()
+         .join(', ');
+       error.value = `Validation error: ${errorMessages}`;
+     } else if (err.response?.data?.message) {
+       error.value = err.response.data.message;
+     } else if (err.message === 'Network Error') {
+       error.value = 'Network error. Make sure the backend is running at http://localhost:8000';
+     } else if (err.message.includes('timeout')) {
+       error.value = 'Upload timeout. The file may be too large. Maximum size is 200MB.';
+     } else {
+       error.value = err.message || 'Error uploading file';
+     }
+     console.error('Upload error:', err);
+   } finally {
+     loading.value = false;
+   }
+ };
 </script>
 
 <style scoped>
