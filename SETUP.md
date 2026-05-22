@@ -38,6 +38,7 @@ cat .env
 ```
 
 Paràmetres claus:
+
 - `APP_URL=http://localhost:8000`
 - `DB_CONNECTION=sqlite` (base de dades local)
 - `FILESYSTEM_DISK=public` (per arxius)
@@ -118,6 +119,7 @@ curl http://localhost:8000/api/multimedia
 ```
 
 Hauria de retornar JSON amb estructura:
+
 ```json
 {
   "data": [],
@@ -128,6 +130,7 @@ Hauria de retornar JSON amb estructura:
 ### 2. Frontend funciona?
 
 Obrir `http://localhost:5173` al navegador. Hauria de veure:
+
 - Navbar amb logo "📹 Ionic Videos App"
 - Home amb galeria buida
 - Botons de Login/Register
@@ -183,11 +186,13 @@ npm run test:e2e -- --headless
 ## 📁 Arxius principals creats
 
 ### Backend
+
 - `tests/Feature/AuthApiTest.php` - Tests autenticació API
 - `tests/Feature/MultimediaApiTest.php` - Tests multimedia CRUD
 - `app/Policies/MultimediaPolicy.php` - Authorization policies
 
 ### Frontend
+
 - `src/components/AppNavbar.vue` - Navegació principal
 - `src/components/AppFooter.vue` - Footer
 - `src/components/MediaCard.vue` - Card media reutilitzable
@@ -203,6 +208,7 @@ npm run test:e2e -- --headless
 ## 🔐 Flux d'Autenticació
 
 ### Registre
+
 1. User ompleix formulari → `/register`
 2. POST `/api/register` amb `{name, email, password, password_confirmation}`
 3. Backend retorna `{user, token}`
@@ -210,6 +216,7 @@ npm run test:e2e -- --headless
 5. Redirecció a `/user`
 
 ### Login
+
 1. User emplir formulari → `/login`
 2. POST `/api/login` amb `{email, password}`
 3. Backend retorna `{user, token}`
@@ -217,6 +224,7 @@ npm run test:e2e -- --headless
 5. Redirecció a `/user`
 
 ### Logout
+
 1. Clic a "Logout"
 2. POST `/api/logout` (amb token)
 3. Token es borra al servidor (Sanctum)
@@ -228,16 +236,19 @@ npm run test:e2e -- --headless
 ## 🎯 Flux de CRUD Media
 
 ### Llistar Tot (públic)
+
 ```
 GET /api/multimedia → HomePage
 ```
 
 ### Llistar Propi (autenticat)
+
 ```
 GET /api/my-multimedia → UserPage
 ```
 
 ### Crear (autenticat)
+
 ```
 POST /api/multimedia
 {
@@ -248,6 +259,7 @@ POST /api/multimedia
 ```
 
 ### Actualitzar (autenticat, owner)
+
 ```
 PUT /api/multimedia/{id}
 {
@@ -257,6 +269,7 @@ PUT /api/multimedia/{id}
 ```
 
 ### Eliminar (autenticat, owner)
+
 ```
 DELETE /api/multimedia/{id}
 ```
@@ -270,6 +283,7 @@ DELETE /api/multimedia/{id}
 **Causa**: Backend no accepta peticions del frontend
 
 **Solució**: Backend ja té CORS configurat. Si falla, verifica:
+
 ```bash
 # Al backend, comprova config/cors.php o middleware
 php artisan config:cache
@@ -281,6 +295,7 @@ php artisan route:clear
 **Causa**: Ruta API no registrada correctament
 
 **Solució**: Verifica `routes/api.php`:
+
 ```php
 Route::apiResource('multimedia', ApiMultimediaController::class);
 ```
@@ -290,6 +305,7 @@ Route::apiResource('multimedia', ApiMultimediaController::class);
 **Causa**: No s'ha creat el symlink per a arxius públics
 
 **Solució**:
+
 ```bash
 cd api-backend
 php artisan storage:link
@@ -300,6 +316,7 @@ php artisan storage:link
 **Causa**: Permisos de base de dades
 
 **Solució**:
+
 ```bash
 cd api-backend
 chmod 666 database/database.sqlite
@@ -311,6 +328,7 @@ chmod 777 database/
 **Causa**: Límit de mida de fitxer
 
 **Solució**: Edita `php.ini`:
+
 ```ini
 upload_max_filesize = 200M
 post_max_size = 200M
@@ -321,24 +339,28 @@ post_max_size = 200M
 ## 📊 Endpoints API Disponibles
 
 ### Auth (Public)
+
 ```
 POST   /api/register          Register user
 POST   /api/login             Login user
 ```
 
 ### Auth (Protected)
+
 ```
 POST   /api/logout            Logout user
 GET    /api/user              Get authenticated user
 ```
 
 ### Multimedia (Public)
+
 ```
 GET    /api/multimedia        List all multimedia (paginated)
 GET    /api/multimedia/{id}   Get single multimedia
 ```
 
 ### Multimedia (Protected)
+
 ```
 GET    /api/my-multimedia     List user's multimedia
 POST   /api/multimedia        Create new media
@@ -351,6 +373,7 @@ DELETE /api/multimedia/{id}   Delete media
 ## 🎓 Flux Típic d'Ús
 
 ### Primer cop (User nou)
+
 1. ✅ Obre `http://localhost:5173`
 2. ✅ Veu Home amb galeria pública
 3. ✅ Clic a "Register"
@@ -364,25 +387,9 @@ DELETE /api/multimedia/{id}   Delete media
 11. ✅ Clic "Logout"
 
 ### Session existent
+
 1. ✅ Obre `http://localhost:5173`
 2. ✅ Si té token a localStorage, és autenticat
 3. ✅ Navbar mostra icons d'usuari
 4. ✅ Pot veure i gestionar els seus media
-
----
-
-## 📞 Info Addional
-
-**Framework**: Ionic Vue + Laravel
-**Base de dades**: SQLite
-**Autenticació**: Laravel Sanctum
-**Upload**: Filepond
-**Tests**: Pest/Cypress
-**Package Manager**: npm/composer
-
----
-
-**Versió**: 1.0.0
-**Data**: Maig 2026
-
-
+5.
