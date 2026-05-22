@@ -1,6 +1,7 @@
-# 📱 VideosApp — Documentació Completa
+# VideosApp — Documentació Completa
 
 **VideosApp** és una plataforma full-stack de gestió de vídeos formada per dos projectes:
+
 - **Backend**: Laravel 13 (`/serveisprocessos/VideosAppPablo`)
 - **Frontend**: Ionic Vue (`/interficies/IonicVideosAppPablo`)
 
@@ -23,17 +24,17 @@
 
 ---
 
-## ⚙️ Requisits i Instal·lació {#requisits}
+## ⚙️ Requisits i Instal·lació
 
 ### Requisits previs
 
 | Programari | Versió |
-|---|---|
-| PHP | 8.3+ |
-| Composer | 2.x |
-| Node.js | 18.x+ |
-| npm | 9.x+ |
-| SQLite | 3.x |
+| ---------- | ------- |
+| PHP        | 8.3+    |
+| Composer   | 2.x     |
+| Node.js    | 18.x+   |
+| npm        | 9.x+    |
+| SQLite     | 3.x     |
 
 ### Instal·lació del Backend (Laravel)
 
@@ -65,7 +66,7 @@ npm run build
 php artisan serve
 ```
 
-El backend estarà disponible a **http://localhost:8000**
+El backend estarà disponible a **[http://localhost:8000](http://localhost:8000)**
 
 ### Instal·lació del Frontend (Ionic)
 
@@ -76,11 +77,11 @@ npm install
 ionic serve
 ```
 
-El frontend estarà disponible a **http://localhost:8100**
+El frontend estarà disponible a **[http://localhost:8100](http://localhost:8100)**
 
 ---
 
-## 🏗️ Arquitectura del Sistema {#arquitectura}
+## 🏗️ Arquitectura del Sistema
 
 ```
 ┌─────────────────────────────────────────────────┐
@@ -113,12 +114,14 @@ El frontend estarà disponible a **http://localhost:8100**
 
 ---
 
-## 🏃 Sprint 1 — Autenticació i Helpers {#sprint-1}
+## 🏃 Sprint 1 — Autenticació i Helpers
 
 ### Objectius
+
 Configurar l'entorn de tests, autenticació amb Fortify i els helpers base per crear usuaris per defecte.
 
 ### Fitxers clau
+
 - `app/helpers/helpers.php` → Funcions auxiliars globals
 - `app/Providers/AppServiceProvider.php` → Registre de helpers i gates
 - `database/migrations/0001_01_01_000000_create_users_table.php`
@@ -134,6 +137,7 @@ createDefaultProfessor();
 ```
 
 **2. Autenticació completa**
+
 - Registre de nous usuaris
 - Login / Logout
 - Recuperació de contrasenya per email
@@ -149,12 +153,14 @@ createDefaultProfessor();
 
 ---
 
-## 🎬 Sprint 2 — Model Video i Vistes {#sprint-2}
+## 🎬 Sprint 2 — Model Video i Vistes
 
 ### Objectius
+
 Crear el model `Video` amb accessors de data, vistes Blade per mostrar vídeos i tests TDD.
 
 ### Fitxers clau
+
 - `app/Models/Video.php`
 - `database/migrations/2025_01_01_000000_create_videos_table.php`
 - `resources/views/videos/show.blade.php`
@@ -162,17 +168,17 @@ Crear el model `Video` amb accessors de data, vistes Blade per mostrar vídeos i
 
 ### Esquema de la taula `videos`
 
-| Camp | Tipus | Descripció |
-|---|---|---|
-| `id` | bigint | Clau primària |
-| `title` | string | Títol del vídeo |
-| `description` | text | Descripció |
-| `url` | string | URL de YouTube |
-| `published_at` | timestamp | Data de publicació |
-| `previous` | foreignId | ID del vídeo anterior |
-| `next` | foreignId | ID del vídeo següent |
-| `series_id` | foreignId | ID de la sèrie |
-| `user_id` | foreignId | ID del creador |
+| Camp             | Tipus     | Descripció            |
+| ---------------- | --------- | ---------------------- |
+| `id`           | bigint    | Clau primària         |
+| `title`        | string    | Títol del vídeo      |
+| `description`  | text      | Descripció            |
+| `url`          | string    | URL de YouTube         |
+| `published_at` | timestamp | Data de publicació    |
+| `previous`     | foreignId | ID del vídeo anterior |
+| `next`         | foreignId | ID del vídeo següent |
+| `series_id`    | foreignId | ID de la sèrie        |
+| `user_id`      | foreignId | ID del creador         |
 
 ### Accessors del model Video
 
@@ -196,12 +202,14 @@ $video->published_at_timestamp
 
 ---
 
-## 🔧 Sprint 3 — Gestió Administrativa de Vídeos {#sprint-3}
+## 🔧 Sprint 3 — Gestió Administrativa de Vídeos
 
 ### Objectius
+
 Crear el panell administratiu `VideosManageController` amb CRUD complet protegit per gates.
 
 ### Fitxers clau
+
 - `app/Http/Controllers/VideosManageController.php`
 - `resources/views/videos/manage/index.blade.php`
 - `resources/views/videos/manage/create.blade.php`
@@ -210,15 +218,15 @@ Crear el panell administratiu `VideosManageController` amb CRUD complet protegit
 
 ### Rutes disponibles
 
-| Mètode | URL | Acció |
-|---|---|---|
-| GET | `/videos/manage` | Llistat de vídeos (gestió) |
-| GET | `/videos/manage/create` | Formulari de creació |
-| POST | `/videos/manage` | Desar nou vídeo |
-| GET | `/videos/manage/{id}/edit` | Formulari d'edició |
-| PUT | `/videos/manage/{id}` | Actualitzar vídeo |
-| GET | `/videos/manage/{id}/delete` | Pàgina confirmació |
-| DELETE | `/videos/manage/{id}` | Eliminar vídeo |
+| Mètode | URL                            | Acció                       |
+| ------- | ------------------------------ | ---------------------------- |
+| GET     | `/videos/manage`             | Llistat de vídeos (gestió) |
+| GET     | `/videos/manage/create`      | Formulari de creació        |
+| POST    | `/videos/manage`             | Desar nou vídeo             |
+| GET     | `/videos/manage/{id}/edit`   | Formulari d'edició          |
+| PUT     | `/videos/manage/{id}`        | Actualitzar vídeo           |
+| GET     | `/videos/manage/{id}/delete` | Pàgina confirmació         |
+| DELETE  | `/videos/manage/{id}`        | Eliminar vídeo              |
 
 ### Tutorial: Crear un vídeo com a gestor
 
@@ -234,12 +242,14 @@ Crear el panell administratiu `VideosManageController` amb CRUD complet protegit
 
 ---
 
-## 👥 Sprint 4 — Permisos i Gestió d'Usuaris {#sprint-4}
+## 👥 Sprint 4 — Permisos i Gestió d'Usuaris
 
 ### Objectius
+
 Sistema de permisos granular per roles, CRUD d'usuaris administratiu i gates per a totes les accions.
 
 ### Fitxers clau
+
 - `app/Http/Controllers/UsersManageController.php`
 - `app/Http/Controllers/UsersController.php`
 - `database/migrations/2026_05_20_000001_add_super_admin_and_permissions_to_users_table.php`
@@ -247,8 +257,8 @@ Sistema de permisos granular per roles, CRUD d'usuaris administratiu i gates per
 
 ### Camps afegits a la taula `users`
 
-| Camp | Tipus | Descripció |
-|---|---|---|
+| Camp            | Tipus   | Descripció                            |
+| --------------- | ------- | -------------------------------------- |
 | `super_admin` | boolean | Accés total sense permisos explícits |
 
 ### Sistema de permisos
@@ -260,6 +270,7 @@ Els permisos s'emmagatzemen a la taula `user_permissions`. Cada permís segueix 
 ```
 
 **Permisos de vídeos:**
+
 ```
 videos_manage_index   → Veure llista
 videos_manage_create  → Veure formulari
@@ -271,11 +282,13 @@ videos_manage_destroy → Eliminar vídeo
 ```
 
 **Permisos d'usuaris:**
+
 ```
 users_manage_index / create / store / edit / update / delete / destroy
 ```
 
 **Permisos de sèries:**
+
 ```
 series_manage_index / create / store / edit / update / delete / destroy
 ```
@@ -292,6 +305,7 @@ $user->update(['super_admin' => true]);
 ```
 
 Via interfície web (panell de gestió d'usuaris):
+
 1. Ves a `http://localhost:8000/users/manage`
 2. Fes clic a **Editar** a l'usuari desitjat
 3. Activa els permisos necessaris
@@ -299,9 +313,10 @@ Via interfície web (panell de gestió d'usuaris):
 
 ---
 
-## 🆔 Sprint 5 — Creador dels Vídeos (user_id) {#sprint-5}
+## 🆔 Sprint 5 — Creador dels Vídeos (user_id)
 
 ### Objectius
+
 Vincular cada vídeo al seu creador mitjançant `user_id`, garantint que els vídeos queden associats al compte que els ha pujat.
 
 ### Relació implementada
@@ -330,9 +345,10 @@ Video::create([
 
 ---
 
-## 📚 Sprint 6 — Sèries i CRUD Regular d'Usuaris {#sprint-6}
+## 📚 Sprint 6 — Sèries i CRUD Regular d'Usuaris
 
 ### Objectius
+
 - Crear el model `Serie` amb relació 1:N a `Video`
 - Implementar CRUD administratiu i públic de sèries
 - Permetre als usuaris regulars crear/editar/eliminar els seus propis vídeos
@@ -357,15 +373,15 @@ resources/views/videos/delete.blade.php
 
 ### Esquema de la taula `series`
 
-| Camp | Tipus | Descripció |
-|---|---|---|
-| `id` | bigint | Clau primària |
-| `title` | string | Títol de la sèrie |
-| `description` | text | Descripció |
-| `image` | string | URL imatge de portada |
-| `user_name` | string | Nom del creador |
-| `user_photo_url` | string | Foto del creador |
-| `published_at` | timestamp | Data de publicació |
+| Camp               | Tipus     | Descripció           |
+| ------------------ | --------- | --------------------- |
+| `id`             | bigint    | Clau primària        |
+| `title`          | string    | Títol de la sèrie   |
+| `description`    | text      | Descripció           |
+| `image`          | string    | URL imatge de portada |
+| `user_name`      | string    | Nom del creador       |
+| `user_photo_url` | string    | Foto del creador      |
+| `published_at`   | timestamp | Data de publicació   |
 
 ### Relació Serie ↔ Video
 
@@ -432,9 +448,10 @@ if ($video->user_id !== auth()->id()
 
 ---
 
-## 🔔 Sprint 7 — Events i Notificacions en Temps Real {#sprint-7}
+## 🔔 Sprint 7 — Events i Notificacions en Temps Real
 
 ### Objectius
+
 - Crear l'event `VideoCreated` que es dispara en crear un vídeo
 - Listener `SendVideoCreatedNotification` envia correu als superadmins
 - Broadcasting via Pusher per a notificacions push al navegador
@@ -494,7 +511,7 @@ Quan qualsevol usuari crea un vídeo, tots els navegadors connectats reben autom
 
 ---
 
-## 🎓 Tutorial Pas a Pas — Totes les Funcions {#tutorial}
+## 🎓 Tutorial Pas a Pas — Totes les Funcions
 
 ### 1. Primera posada en marxa
 
@@ -513,6 +530,7 @@ ionic serve
 ```bash
 php artisan tinker
 ```
+
 ```php
 $user = App\Models\User::where('email', 'pablomaso@iesebre.com')->first();
 $user->update(['super_admin' => true]);
@@ -520,29 +538,29 @@ $user->update(['super_admin' => true]);
 
 ### 3. Gestió completa de vídeos (gestor)
 
-| Acció | URL | Permís necessari |
-|---|---|---|
-| Veure llista | `/videos/manage` | `videos_manage_index` |
-| Crear vídeo | `/videos/manage/create` | `videos_manage_create` |
-| Editar vídeo | `/videos/manage/{id}/edit` | `videos_manage_edit` |
+| Acció          | URL                            | Permís necessari        |
+| --------------- | ------------------------------ | ------------------------ |
+| Veure llista    | `/videos/manage`             | `videos_manage_index`  |
+| Crear vídeo    | `/videos/manage/create`      | `videos_manage_create` |
+| Editar vídeo   | `/videos/manage/{id}/edit`   | `videos_manage_edit`   |
 | Eliminar vídeo | `/videos/manage/{id}/delete` | `videos_manage_delete` |
 
 ### 4. Gestió de sèries (gestor)
 
-| Acció | URL | Permís necessari |
-|---|---|---|
-| Veure llista | `/series/manage` | `series_manage_index` |
-| Crear sèrie | `/series/manage/create` | `series_manage_create` |
-| Editar sèrie | `/series/manage/{id}/edit` | `series_manage_edit` |
+| Acció          | URL                            | Permís necessari        |
+| --------------- | ------------------------------ | ------------------------ |
+| Veure llista    | `/series/manage`             | `series_manage_index`  |
+| Crear sèrie    | `/series/manage/create`      | `series_manage_create` |
+| Editar sèrie   | `/series/manage/{id}/edit`   | `series_manage_edit`   |
 | Eliminar sèrie | `/series/manage/{id}/delete` | `series_manage_delete` |
 
 ### 5. Gestió d'usuaris (gestor)
 
-| Acció | URL | Permís necessari |
-|---|---|---|
-| Veure llista | `/users/manage` | `users_manage_index` |
-| Crear usuari | `/users/manage/create` | `users_manage_create` |
-| Editar usuari | `/users/manage/{id}/edit` | `users_manage_edit` |
+| Acció          | URL                           | Permís necessari       |
+| --------------- | ----------------------------- | ----------------------- |
+| Veure llista    | `/users/manage`             | `users_manage_index`  |
+| Crear usuari    | `/users/manage/create`      | `users_manage_create` |
+| Editar usuari   | `/users/manage/{id}/edit`   | `users_manage_edit`   |
 | Eliminar usuari | `/users/manage/{id}/delete` | `users_manage_delete` |
 
 ### 6. Associar un vídeo a una sèrie
@@ -561,7 +579,7 @@ $user->update(['super_admin' => true]);
 
 ---
 
-## 🧪 Tests {#tests}
+## 🧪 Tests
 
 ### Executar tots els tests
 
@@ -575,16 +593,16 @@ vendor/bin/phpunit -c phpunit.xml
 
 ### Cobertura de tests (119 tests, 260 assertions)
 
-| Sprint | Fitxer de test | Tests |
-|---|---|---|
-| Sprint 1 | `tests/Unit/HelpersTest.php` | Helpers i creació d'usuaris |
-| Sprint 2 | `tests/Unit/VideoTest.php` | Accessors de dates |
-| Sprint 2 | `tests/Feature/Videos/VideosTest.php` | Visualització pública |
-| Sprint 3 | `tests/Feature/Videos/VideosManageControllerTest.php` | CRUD gestor |
-| Sprint 4 | `tests/Feature/Users/UsersManageControllerTest.php` | CRUD usuaris |
-| Sprint 6 | `tests/Unit/SerieTest.php` | Relació Serie-Video |
-| Sprint 6 | `tests/Feature/Series/SeriesManageControllerTest.php` | CRUD sèries (15 tests) |
-| Sprint 7 | `tests/Feature/Videos/VideoNotificationsTest.php` | Events i broadcasting |
+| Sprint   | Fitxer de test                                          | Tests                        |
+| -------- | ------------------------------------------------------- | ---------------------------- |
+| Sprint 1 | `tests/Unit/HelpersTest.php`                          | Helpers i creació d'usuaris |
+| Sprint 2 | `tests/Unit/VideoTest.php`                            | Accessors de dates           |
+| Sprint 2 | `tests/Feature/Videos/VideosTest.php`                 | Visualització pública      |
+| Sprint 3 | `tests/Feature/Videos/VideosManageControllerTest.php` | CRUD gestor                  |
+| Sprint 4 | `tests/Feature/Users/UsersManageControllerTest.php`   | CRUD usuaris                 |
+| Sprint 6 | `tests/Unit/SerieTest.php`                            | Relació Serie-Video         |
+| Sprint 6 | `tests/Feature/Series/SeriesManageControllerTest.php` | CRUD sèries (15 tests)      |
+| Sprint 7 | `tests/Feature/Videos/VideoNotificationsTest.php`     | Events i broadcasting        |
 
 ### Executar un test concret
 
@@ -601,7 +619,7 @@ vendor/bin/phpunit --filter test_superadmins_can_manage_series
 
 ---
 
-## 🗂️ Estructura Completa del Projecte {#estructura}
+## 🗂️ Estructura Completa del Projecte
 
 ```
 VideosAppPablo/ (Backend Laravel)
@@ -660,7 +678,7 @@ VideosAppPablo/ (Backend Laravel)
 
 ---
 
-## 🛠️ Comandes Útils {#comandes}
+## 🛠️ Comandes Útils
 
 ```bash
 # Servidor de desenvolupament
@@ -697,18 +715,18 @@ ionic build              # Build de producció
 
 ## 📦 Tecnologies
 
-| Tecnologia | Versió | Ús |
-|---|---|---|
-| Laravel | 13.x | Backend PHP |
-| Fortify | 1.x | Autenticació |
-| PHPUnit | 12.x | Tests |
-| SQLite | 3.x | Base de dades |
-| Pusher | — | Broadcasting WebSocket |
-| Laravel Echo | — | Client WebSocket |
-| Vite | 8.x | Bundler d'assets |
-| Ionic Vue | 8.x | Frontend mòbil |
-| Pinia | 3.x | Estat global Vue |
-| Axios | 1.x | HTTP client |
+| Tecnologia   | Versió | Ús                    |
+| ------------ | ------- | ---------------------- |
+| Laravel      | 13.x    | Backend PHP            |
+| Fortify      | 1.x     | Autenticació          |
+| PHPUnit      | 12.x    | Tests                  |
+| SQLite       | 3.x     | Base de dades          |
+| Pusher       | —      | Broadcasting WebSocket |
+| Laravel Echo | —      | Client WebSocket       |
+| Vite         | 8.x     | Bundler d'assets       |
+| Ionic Vue    | 8.x     | Frontend mòbil        |
+| Pinia        | 3.x     | Estat global Vue       |
+| Axios        | 1.x     | HTTP client            |
 
 ---
 
